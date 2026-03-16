@@ -4,5 +4,5 @@
 *.tfstate.backup
 .terraform.tfstate.lock.info
 crash.log
-*.tfvars
+# *.tfvars (Removed to allow configuration files)
 .DS_Store
