@@ -12,3 +12,8 @@ resource "genesyscloud_routing_queue" "support_queue" {
   name        = "Terraform_Support_Queue"
   description = "A new support queue created via GitHub Actions"
 }
+
+resource "genesyscloud_routing_queue" "technical_queue" {
+  name        = "Technical_Queue"
+  description = "A new technical queue created via GitHub Actions"
+}
