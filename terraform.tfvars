@@ -37,15 +37,34 @@ users = {
 roles = {
   "support_tier_1" = {
     name        = "Support Tier 1"
-    description = "Custom role for first level support agents"
-    permissions = [
-      "routing:queue:view",
-      "routing:queue:join",
-      "directory:user:view",
-      "directory:user:search",
-      "conversation:communication:view",
-      "conversation:call:view",
-      "alerting:interaction:view"
+    description = "Custom role for first level support agents with granular permissions"
+    permissions = []
+    permission_policies = [
+      {
+        domain      = "routing"
+        entity_name = "queue"
+        action_set  = ["view", "join"]
+      },
+      {
+        domain      = "directory"
+        entity_name = "user"
+        action_set  = ["view", "search"]
+      },
+      {
+        domain      = "conversation"
+        entity_name = "communication"
+        action_set  = ["view"]
+      },
+      {
+        domain      = "conversation"
+        entity_name = "call"
+        action_set  = ["view"]
+      },
+      {
+        domain      = "alerting"
+        entity_name = "interaction"
+        action_set  = ["view"]
+      }
     ]
   }
 }
