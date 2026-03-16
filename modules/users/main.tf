@@ -1,5 +1,6 @@
-resource "genesyscloud_user" "example_user" {
-  email = "terraform_poc_user@example.com"
-  name  = "Terraform POC User"
-  state = "active"
+resource "genesyscloud_user" "users" {
+  for_each = var.users
+  name     = each.value.name
+  email    = each.value.email
+  state    = each.value.state
 }
