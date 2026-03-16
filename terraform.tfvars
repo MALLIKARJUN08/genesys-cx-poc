@@ -38,6 +38,14 @@ roles = {
   "support_tier_1" = {
     name        = "Support Tier 1"
     description = "Custom role for first level support agents"
-    permissions = ["routing_queue_view", "routing_queue_join"]
+    permissions = [
+      "routing_queue_view",
+      "routing_queue_join",
+      "directory_user_view",
+      "directory_user_search",
+      "conversation_message_view",
+      "conversation_call_view",
+      "alerting_interaction_view"
+    ]
   }
 }
