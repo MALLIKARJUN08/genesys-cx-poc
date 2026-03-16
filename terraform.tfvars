@@ -14,6 +14,10 @@ queues = {
   "technical_queue" = {
     name        = "Technical_Queue"
     description = "A new technical queue created via GitHub Actions"
+  },
+  "innovation_queue" = {
+    name        = "Innovation_Queue"
+    description = "A new queue demonstrating dynamic variable-driven creation!"
   }
 }
 
@@ -21,6 +25,11 @@ users = {
   "example_user" = {
     name  = "Terraform POC User"
     email = "terraform_poc_user@example.com"
+    state = "active"
+  },
+  "jane_doe" = {
+    name  = "Jane Doe"
+    email = "jane.doe@example.com"
     state = "active"
   }
 }
