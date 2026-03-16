@@ -33,3 +33,11 @@ users = {
     state = "active"
   }
 }
+
+roles = {
+  "support_tier_1" = {
+    name        = "Support Tier 1"
+    description = "Custom role for first level support agents"
+    permissions = ["routing_queue_view", "routing_queue_join"]
+  }
+}

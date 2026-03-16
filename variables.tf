@@ -14,3 +14,12 @@ variable "users" {
     state = string
   }))
 }
+
+variable "roles" {
+  description = "Roles to be passed to the roles module"
+  type = map(object({
+    name        = string
+    description = string
+    permissions = list(string)
+  }))
+}

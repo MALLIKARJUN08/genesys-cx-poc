@@ -8,6 +8,11 @@ module "users" {
   users  = var.users
 }
 
+module "roles" {
+  source = "./modules/roles"
+  roles  = var.roles
+}
+
 # Mapping old addresses to new for_each addresses to prevent resource recreation
 moved {
   from = module.queues.genesyscloud_routing_queue.poc_queue
