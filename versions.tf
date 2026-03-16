@@ -9,7 +9,7 @@ terraform {
   }
 
   cloud {
-    organization = "cg_genesys" 
+    organization = "cg_genesys"
     workspaces {
       name = "genesys-cx-poc"
     }
