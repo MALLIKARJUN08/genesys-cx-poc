@@ -8,13 +8,12 @@ terraform {
     }
   }
 
-  # This block will be used to integrate with Terraform Cloud
-  # cloud {
-  #   organization = "YOUR_TERRAFORM_CLOUD_ORG"
-  #   workspaces {
-  #     name = "genesys-cx-poc-workspace"
-  #   }
-  # }
+  cloud {
+    organization = "cg_genesys" 
+    workspaces {
+      name = "genesys-cx-poc"
+    }
+  }
 }
 
 provider "genesyscloud" {
