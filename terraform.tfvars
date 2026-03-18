@@ -20,10 +20,11 @@ queues = {
     name        = "Innovation_Queue"
     description = "A new queue demonstrating dynamic variable-driven creation!"
   },
-   "CICD_queue" = {
+  "CICD_queue" = {
     name        = "CICD_Queue"
     description = "A new queue demonstrating dynamic variable-driven creation!"
   }
+
 }
 
 users = {
