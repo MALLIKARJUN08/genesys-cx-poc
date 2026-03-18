@@ -19,6 +19,10 @@ queues = {
   "innovation_queue" = {
     name        = "Innovation_Queue"
     description = "A new queue demonstrating dynamic variable-driven creation!"
+  },
+   "CICD_queue" = {
+    name        = "CICD_Queue"
+    description = "A new queue demonstrating dynamic variable-driven creation!"
   }
 }
 
