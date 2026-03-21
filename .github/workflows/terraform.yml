@@ -7,6 +7,16 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target Environment'
+        required: true
+        default: 'poc'
+        type: choice
+        options:
+          - poc
+          - prod
 
 jobs:
   terraform:
@@ -16,6 +26,7 @@ jobs:
     # This environment uses the TF_API_TOKEN secret configured in the repository
     env:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TF_WORKSPACE: ${{ github.event.inputs.environment == 'prod' && 'genesys-cx-prod' || 'genesys-cx-poc' }}
 
     steps:
       - name: Checkout Repository

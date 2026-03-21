@@ -11,7 +11,7 @@ terraform {
   cloud {
     organization = "cg_genesys"
     workspaces {
-      name = "genesys-cx-poc"
+      tags = ["genesys-cx"]
     }
   }
 }
