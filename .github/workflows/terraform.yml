@@ -18,6 +18,11 @@ on:
           - poc
           - prod
 
+# Prevent multiple runs in the same workspace from overlapping
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.inputs.environment || 'poc' }}
+  cancel-in-progress: false
+
 jobs:
   terraform:
     name: 'Terraform'
@@ -30,10 +35,10 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
         with:
           # Terraform Cloud handles the execution, so we just set up CLI
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
