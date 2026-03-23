@@ -132,6 +132,7 @@ data "genesyscloud_auth_division_home" "home" {}
 data "genesyscloud_flow" "flows" {
   for_each = toset([for q in var.queues : q.queue_flow_name if q.queue_flow_name != null])
   name     = each.value
+  type     = [for q in var.queues : q.queue_flow_type if q.queue_flow_name == each.value][0]
 }
 
 data "genesyscloud_architect_user_prompt" "prompts" {
@@ -142,8 +143,8 @@ data "genesyscloud_architect_user_prompt" "prompts" {
 data "genesyscloud_group" "groups" {
   for_each = toset(distinct(compact(concat(
     flatten([for q in var.queues : q.group_names if q.group_names != null]),
-    flatten([for q in var.queues : [for b in q.bullseye_rings : [for m in b.member_groups : m.member_group_name if m.member_group_name != null]] if q.bullseye_rings != null]),
-    flatten([for q in var.queues : [for r in q.conditional_group_activation.rules : [for g in r.groups : g.member_group_name if g.member_group_name != null]] if q.conditional_group_activation != null && q.conditional_group_activation.rules != null])
+    flatten([for q in var.queues : [for b in (q.bullseye_rings != null ? q.bullseye_rings : []) : [for m in (b.member_groups != null ? b.member_groups : []) : m.member_group_name if m.member_group_name != null]] if q.bullseye_rings != null]),
+    flatten([for q in var.queues : [for r in (q.conditional_group_activation != null && q.conditional_group_activation.rules != null ? q.conditional_group_activation.rules : []) : [for g in (r.groups != null ? r.groups : []) : g.member_group_name if g.member_group_name != null]] if q.conditional_group_activation != null])
   ))))
   name = each.value
 }

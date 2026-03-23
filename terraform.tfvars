@@ -1,6 +1,6 @@
 # Genesys CX as Code - Automated lookup Configuration
-# 🚀 This version uses NAME-BASED lookups to avoid manual ID entry.
-# If a name is provided, Terraform will automatically find the matching ID in your Org.
+# 🚀 This version uses NAME-BASED lookups.
+# ⚠️ IMPORTANT: These names MUST match real resources in your Genesys Org.
 
 queues = {
   "example_queue" = {
@@ -10,10 +10,11 @@ queues = {
     acw_timeout_ms          = 300000
     skill_evaluation_method = "BEST"
 
-    # Automated Lookups (Replaces manual UUIDs)
-    queue_flow_name     = "Default In-Queue Call Flow" # Terraform finds this by name
-    whisper_prompt_name = "Default Whisper Prompt"     # Terraform finds this by name
-    group_names         = ["Contact Center Agents"]    # Terraform finds these by name
+    # 🛑 ACTION REQUIRED: Replace these names with REAL resources from your Architect Flows and Prompts
+    queue_flow_name     = "First Call Flow" 
+    queue_flow_type     = "Inbound Call"
+    whisper_prompt_name = "abc"
+    group_names         = ["CIC_group"]
 
     auto_answer_only         = true
     enable_transcription     = true
@@ -43,7 +44,7 @@ queues = {
         expansion_timeout_seconds = 30
         member_groups = [
           {
-            member_group_name = "Contact Center Agents"
+            member_group_name = "REPLACE_WITH_YOUR_AGENT_GROUP"
             member_group_type = "GROUP"
           }
         ]
@@ -77,7 +78,7 @@ queues = {
           ]
           groups = [
             {
-              member_group_name = "Support Agents"
+              member_group_name = "REPLACE_WITH_YOUR_OVERFLOW_GROUP"
               member_group_type = "GROUP"
             }
           ]
