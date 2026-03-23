@@ -1,23 +1,23 @@
 variable "queues" {
   description = "Queues to be passed to the queues module"
   type = map(object({
-    name                          = string
-    description                   = optional(string)
-    division_id                   = optional(string)
-    acw_wrapup_prompt             = optional(string)
-    acw_timeout_ms                = optional(number)
-    skill_evaluation_method       = optional(string)
-    queue_flow_id                 = optional(string)
-    whisper_prompt_id             = optional(string)
-    auto_answer_only              = optional(bool)
-    enable_transcription          = optional(bool)
-    enable_audio_monitoring       = optional(bool)
-    enable_manual_assignment      = optional(bool)
-    calling_party_name            = optional(string)
-    groups                        = optional(list(string))
-    wrapup_codes                  = optional(list(string))
-    default_script_ids            = optional(map(string))
-    outbound_email_address        = optional(object({
+    name                     = string
+    description              = optional(string)
+    division_id              = optional(string)
+    acw_wrapup_prompt        = optional(string)
+    acw_timeout_ms           = optional(number)
+    skill_evaluation_method  = optional(string)
+    queue_flow_id            = optional(string)
+    whisper_prompt_id        = optional(string)
+    auto_answer_only         = optional(bool)
+    enable_transcription     = optional(bool)
+    enable_audio_monitoring  = optional(bool)
+    enable_manual_assignment = optional(bool)
+    calling_party_name       = optional(string)
+    groups                   = optional(list(string))
+    wrapup_codes             = optional(list(string))
+    default_script_ids       = optional(map(string))
+    outbound_email_address = optional(object({
       domain_id = string
       route_id  = string
     }))
@@ -34,7 +34,7 @@ variable "queues" {
     bullseye_rings = optional(list(object({
       expansion_timeout_seconds = number
       skills_to_remove          = optional(list(string))
-      member_groups             = optional(list(object({
+      member_groups = optional(list(object({
         member_group_id   = string
         member_group_type = string
       })))

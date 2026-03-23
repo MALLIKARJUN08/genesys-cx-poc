@@ -1,5 +1,3 @@
-data "genesyscloud_auth_division_home" "home" {}
-
 resource "genesyscloud_routing_queue" "queues" {
   for_each = var.queues
 
@@ -51,6 +49,7 @@ resource "genesyscloud_routing_queue" "queues" {
     content {
       expansion_timeout_seconds = bullseye_rings.value.expansion_timeout_seconds
       skills_to_remove          = bullseye_rings.value.skills_to_remove
+
       dynamic "member_groups" {
         for_each = bullseye_rings.value.member_groups != null ? bullseye_rings.value.member_groups : []
         content {
@@ -84,6 +83,7 @@ resource "genesyscloud_routing_queue" "queues" {
           }
         }
       }
+
       dynamic "rules" {
         for_each = conditional_group_activation.value.rules != null ? conditional_group_activation.value.rules : []
         content {
@@ -114,6 +114,7 @@ resource "genesyscloud_routing_queue" "queues" {
     }
   }
 
+  # Member Management
   dynamic "members" {
     for_each = each.value.members != null ? each.value.members : []
     content {
@@ -122,3 +123,5 @@ resource "genesyscloud_routing_queue" "queues" {
     }
   }
 }
+
+data "genesyscloud_auth_division_home" "home" {}

@@ -17,13 +17,13 @@ queues = {
     enable_manual_assignment = true
     calling_party_name       = "Antigravity Support"
     groups                   = ["aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"] # Placeholder Group ID
-    
+
     media_settings_call = {
       alerting_timeout_sec      = 30
       service_level_percentage  = 0.8
       service_level_duration_ms = 20000
     }
-    
+
     routing_rules = [
       {
         operator     = "MEETS_THRESHOLD"
@@ -36,7 +36,7 @@ queues = {
         wait_seconds = 120
       }
     ]
-    
+
     bullseye_rings = [
       {
         expansion_timeout_seconds = 15
@@ -52,7 +52,7 @@ queues = {
         ]
       }
     ]
-    
+
     conditional_group_activation = {
       pilot_rule = {
         condition_expression = "C1"
@@ -87,7 +87,7 @@ queues = {
         }
       ]
     }
-    
+
     wrapup_codes = ["eeeeeeee-ffff-0000-1111-222222222222"] # Placeholder Wrapup ID
     members = [
       {
@@ -108,9 +108,9 @@ users = {
 
 roles = {
   "sample_role" = {
-    name        = "Sample Role"
-    description = "A basic sample role"
-    permissions = ["routing:queue:view"]
+    name                = "Sample Role"
+    description         = "A basic sample role"
+    permissions         = ["routing:queue:view"]
     permission_policies = []
   }
 }
