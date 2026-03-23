@@ -7,14 +7,17 @@ resource "genesyscloud_routing_queue" "queues" {
   acw_wrapup_prompt        = each.value.acw_wrapup_prompt
   acw_timeout_ms           = each.value.acw_timeout_ms
   skill_evaluation_method  = each.value.skill_evaluation_method
-  queue_flow_id            = each.value.queue_flow_id
-  whisper_prompt_id        = each.value.whisper_prompt_id
+  queue_flow_id            = each.value.queue_flow_id != null ? each.value.queue_flow_id : (each.value.queue_flow_name != null ? data.genesyscloud_flow.flows[each.value.queue_flow_name].id : null)
+  whisper_prompt_id        = each.value.whisper_prompt_id != null ? each.value.whisper_prompt_id : (each.value.whisper_prompt_name != null ? data.genesyscloud_architect_user_prompt.prompts[each.value.whisper_prompt_name].id : null)
   auto_answer_only         = each.value.auto_answer_only
   enable_transcription     = each.value.enable_transcription
   enable_audio_monitoring  = each.value.enable_audio_monitoring
   enable_manual_assignment = each.value.enable_manual_assignment
   calling_party_name       = each.value.calling_party_name
-  groups                   = each.value.groups
+  groups = distinct(compact(concat(
+    each.value.groups != null ? each.value.groups : [],
+    each.value.group_names != null ? [for g in each.value.group_names : data.genesyscloud_group.groups[g].id] : []
+  )))
   wrapup_codes             = each.value.wrapup_codes
   default_script_ids       = each.value.default_script_ids
 
@@ -53,7 +56,7 @@ resource "genesyscloud_routing_queue" "queues" {
       dynamic "member_groups" {
         for_each = bullseye_rings.value.member_groups != null ? bullseye_rings.value.member_groups : []
         content {
-          member_group_id   = member_groups.value.member_group_id
+          member_group_id   = member_groups.value.member_group_id != null ? member_groups.value.member_group_id : (member_groups.value.member_group_name != null ? data.genesyscloud_group.groups[member_groups.value.member_group_name].id : null)
           member_group_type = member_groups.value.member_group_type
         }
       }
@@ -105,7 +108,7 @@ resource "genesyscloud_routing_queue" "queues" {
           dynamic "groups" {
             for_each = rules.value.groups
             content {
-              member_group_id   = groups.value.member_group_id
+              member_group_id   = groups.value.member_group_id != null ? groups.value.member_group_id : (groups.value.member_group_name != null ? data.genesyscloud_group.groups[groups.value.member_group_name].id : null)
               member_group_type = groups.value.member_group_type
             }
           }
@@ -125,3 +128,22 @@ resource "genesyscloud_routing_queue" "queues" {
 }
 
 data "genesyscloud_auth_division_home" "home" {}
+
+data "genesyscloud_flow" "flows" {
+  for_each = toset([for q in var.queues : q.queue_flow_name if q.queue_flow_name != null])
+  name     = each.value
+}
+
+data "genesyscloud_architect_user_prompt" "prompts" {
+  for_each = toset([for q in var.queues : q.whisper_prompt_name if q.whisper_prompt_name != null])
+  name     = each.value
+}
+
+data "genesyscloud_group" "groups" {
+  for_each = toset(distinct(compact(concat(
+    flatten([for q in var.queues : q.group_names if q.group_names != null]),
+    flatten([for q in var.queues : [for b in q.bullseye_rings : [for m in b.member_groups : m.member_group_name if m.member_group_name != null]] if q.bullseye_rings != null]),
+    flatten([for q in var.queues : [for r in q.conditional_group_activation.rules : [for g in r.groups : g.member_group_name if g.member_group_name != null]] if q.conditional_group_activation != null && q.conditional_group_activation.rules != null])
+  ))))
+  name = each.value
+}

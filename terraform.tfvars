@@ -1,22 +1,25 @@
-# Genesys CX as Code - Sample Data Configuration
-# Use this file to test the syntax and structure of your advanced queue configurations.
-# ⚠️ NOTE: Replace the placeholder UUIDs (0a0a0a0a-...) with real IDs from your Genesys Org.
+# Genesys CX as Code - Automated lookup Configuration
+# 🚀 This version uses NAME-BASED lookups to avoid manual ID entry.
+# If a name is provided, Terraform will automatically find the matching ID in your Org.
 
 queues = {
   "example_queue" = {
     name                     = "Sample_Advanced_Queue"
-    description              = "A queue demonstrating all advanced Terraform configurations"
+    description              = "A queue demonstrating automated Name-to-ID lookups"
     acw_wrapup_prompt        = "MANDATORY_TIMEOUT"
     acw_timeout_ms           = 300000
     skill_evaluation_method  = "BEST"
-    queue_flow_id            = "11111111-2222-3333-4444-555555555555" # Placeholder Flow ID
-    whisper_prompt_id        = "66666666-7777-8888-9999-000000000000" # Placeholder Prompt ID
+    
+    # Automated Lookups (Replaces manual UUIDs)
+    queue_flow_name          = "Default In-Queue Call Flow" # Terraform finds this by name
+    whisper_prompt_name      = "Default Whisper Prompt"     # Terraform finds this by name
+    group_names              = ["Contact Center Agents"]    # Terraform finds these by name
+
     auto_answer_only         = true
     enable_transcription     = true
     enable_audio_monitoring  = true
     enable_manual_assignment = true
     calling_party_name       = "Antigravity Support"
-    groups                   = ["aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"] # Placeholder Group ID
 
     media_settings_call = {
       alerting_timeout_sec      = 30
@@ -29,24 +32,19 @@ queues = {
         operator     = "MEETS_THRESHOLD"
         threshold    = 5
         wait_seconds = 60
-      },
-      {
-        operator     = "MEETS_THRESHOLD"
-        threshold    = 2
-        wait_seconds = 120
       }
     ]
 
     bullseye_rings = [
       {
         expansion_timeout_seconds = 15
-        skills_to_remove          = ["bbbbbbbb-cccc-dddd-eeee-ffffffffffff"] # Placeholder Skill ID
+        # skills_to_remove still requires IDs currently unless we add skill_names
       },
       {
         expansion_timeout_seconds = 30
         member_groups = [
           {
-            member_group_id   = "cccccccc-dddd-eeee-ffff-000000000000" # Placeholder Group ID
+            member_group_name = "Contact Center Agents" # Replaced dummy ID
             member_group_type = "GROUP"
           }
         ]
@@ -80,21 +78,16 @@ queues = {
           ]
           groups = [
             {
-              member_group_id   = "dddddddd-eeee-ffff-0000-111111111111" # Placeholder Group ID
+              member_group_name = "Support Agents" # Replaced dummy ID
               member_group_type = "GROUP"
             }
           ]
         }
       ]
     }
-
-    wrapup_codes = ["eeeeeeee-ffff-0000-1111-222222222222"] # Placeholder Wrapup ID
-    members = [
-      {
-        user_id  = "ffffffff-0000-1111-2222-333333333333" # Placeholder User ID
-        ring_num = 1
-      }
-    ]
+    
+    # Note: Wrapup codes and direct members still use IDs for precision
+    # wrapup_codes = ["..."] 
   }
 }
 

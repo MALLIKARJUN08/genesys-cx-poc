@@ -8,13 +8,16 @@ variable "queues" {
     acw_timeout_ms           = optional(number)
     skill_evaluation_method  = optional(string)
     queue_flow_id            = optional(string)
+    queue_flow_name          = optional(string)
     whisper_prompt_id        = optional(string)
+    whisper_prompt_name      = optional(string)
     auto_answer_only         = optional(bool)
     enable_transcription     = optional(bool)
     enable_audio_monitoring  = optional(bool)
     enable_manual_assignment = optional(bool)
     calling_party_name       = optional(string)
     groups                   = optional(list(string))
+    group_names              = optional(list(string))
     wrapup_codes             = optional(list(string))
     default_script_ids       = optional(map(string))
     outbound_email_address = optional(object({
@@ -35,7 +38,8 @@ variable "queues" {
       expansion_timeout_seconds = number
       skills_to_remove          = optional(list(string))
       member_groups = optional(list(object({
-        member_group_id   = string
+        member_group_id   = optional(string)
+        member_group_name = optional(string)
         member_group_type = string
       })))
     })))
@@ -62,7 +66,8 @@ variable "queues" {
           value    = number
         }))
         groups = list(object({
-          member_group_id   = string
+          member_group_id   = optional(string)
+          member_group_name = optional(string)
           member_group_type = string
         }))
       })))
