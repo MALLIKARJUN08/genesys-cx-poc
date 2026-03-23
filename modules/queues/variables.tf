@@ -9,7 +9,7 @@ variable "queues" {
     skill_evaluation_method  = optional(string)
     queue_flow_id            = optional(string)
     queue_flow_name          = optional(string)
-    queue_flow_type          = optional(string, "inboundcall")
+    queue_flow_type          = optional(string, "inqueuecall")
     whisper_prompt_id        = optional(string)
     whisper_prompt_name      = optional(string)
     auto_answer_only         = optional(bool)

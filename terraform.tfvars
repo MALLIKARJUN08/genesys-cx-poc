@@ -11,8 +11,8 @@ queues = {
     skill_evaluation_method = "BEST"
 
     # Automated Lookups (Working for Flows and Prompts!)
-    queue_flow_name     = "First Call Flow"
-    queue_flow_type     = "inboundcall"
+    queue_flow_name     = "Default In-Queue Flow"
+    queue_flow_type     = "inqueuecall"
     whisper_prompt_name = "abc"
 
     # Direct ID Fallback for Groups (since name discovery is restricted)
