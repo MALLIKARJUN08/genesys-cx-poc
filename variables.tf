@@ -79,8 +79,8 @@ variable "queues" {
             metric   = string                # e.g., "EstimatedWaitTime"
             queue_id = optional(string)
           })
-          operator = string                  # e.g., "GreaterThan"
-          value    = number                  # Threshold value
+          operator      = string                  # e.g., "GreaterThan"
+          value         = number                  # Threshold value
         }))
       }))
       rules      = optional(list(object({         # Specific rules that activate specific groups
@@ -90,8 +90,8 @@ variable "queues" {
             metric   = string                # e.g., "IdleAgentCount"
             queue_id = optional(string)
           })
-          operator = string                  # e.g., "LessThan"
-          value    = number
+          operator      = string                  # e.g., "LessThan"
+          value         = number
         }))
         groups               = list(object({               # Groups to activate if condition met
           member_group_id   = optional(string)
