@@ -91,8 +91,8 @@ queues = {
     wrapup_codes = ["eeeeeeee-ffff-0000-1111-222222222222"] # Placeholder Wrapup ID
     members = [
       {
-        user_id = "ffffffff-0000-1111-2222-333333333333" # Placeholder User ID
-        ring    = 1
+        user_id  = "ffffffff-0000-1111-2222-333333333333" # Placeholder User ID
+        ring_num = 1
       }
     ]
   }
