@@ -4,16 +4,16 @@
 
 queues = {
   "example_queue" = {
-    name                     = "Sample_Advanced_Queue"
-    description              = "A queue demonstrating automated Name-to-ID lookups"
-    acw_wrapup_prompt        = "MANDATORY_TIMEOUT"
-    acw_timeout_ms           = 300000
-    skill_evaluation_method  = "BEST"
-    
+    name                    = "Sample_Advanced_Queue"
+    description             = "A queue demonstrating automated Name-to-ID lookups"
+    acw_wrapup_prompt       = "MANDATORY_TIMEOUT"
+    acw_timeout_ms          = 300000
+    skill_evaluation_method = "BEST"
+
     # Automated Lookups (Replaces manual UUIDs)
-    queue_flow_name          = "Default In-Queue Call Flow" # Terraform finds this by name
-    whisper_prompt_name      = "Default Whisper Prompt"     # Terraform finds this by name
-    group_names              = ["Contact Center Agents"]    # Terraform finds these by name
+    queue_flow_name     = "Default In-Queue Call Flow" # Terraform finds this by name
+    whisper_prompt_name = "Default Whisper Prompt"     # Terraform finds this by name
+    group_names         = ["Contact Center Agents"]    # Terraform finds these by name
 
     auto_answer_only         = true
     enable_transcription     = true
@@ -38,13 +38,12 @@ queues = {
     bullseye_rings = [
       {
         expansion_timeout_seconds = 15
-        # skills_to_remove still requires IDs currently unless we add skill_names
       },
       {
         expansion_timeout_seconds = 30
         member_groups = [
           {
-            member_group_name = "Contact Center Agents" # Replaced dummy ID
+            member_group_name = "Contact Center Agents"
             member_group_type = "GROUP"
           }
         ]
@@ -78,16 +77,13 @@ queues = {
           ]
           groups = [
             {
-              member_group_name = "Support Agents" # Replaced dummy ID
+              member_group_name = "Support Agents"
               member_group_type = "GROUP"
             }
           ]
         }
       ]
     }
-    
-    # Note: Wrapup codes and direct members still use IDs for precision
-    # wrapup_codes = ["..."] 
   }
 }
 
