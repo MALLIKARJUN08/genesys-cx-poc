@@ -12,7 +12,7 @@ queues = {
 
     # 🛑 ACTION REQUIRED: Replace these names with REAL resources from your Architect Flows and Prompts
     queue_flow_name     = "First Call Flow"
-    queue_flow_type     = "Inbound Call"
+    queue_flow_type     = "inboundcall"
     whisper_prompt_name = "abc"
     group_names         = ["CIC_group"]
 
@@ -44,7 +44,7 @@ queues = {
         expansion_timeout_seconds = 30
         member_groups = [
           {
-            member_group_name = "REPLACE_WITH_YOUR_AGENT_GROUP"
+            member_group_name = "CIC_group"
             member_group_type = "GROUP"
           }
         ]
@@ -78,7 +78,7 @@ queues = {
           ]
           groups = [
             {
-              member_group_name = "REPLACE_WITH_YOUR_OVERFLOW_GROUP"
+              member_group_name = "CIC_group"
               member_group_type = "GROUP"
             }
           ]
