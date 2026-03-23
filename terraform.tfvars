@@ -1,6 +1,6 @@
 # Genesys CX as Code - Automated lookup Configuration
-# 🚀 This version uses NAME-BASED lookups.
-# ⚠️ IMPORTANT: These names MUST match real resources in your Genesys Org.
+# 🚀 This version uses NAME-BASED lookups for Flows/Prompts and IDs for Groups.
+# ⚠️ Note: If name discovery fails (e.g. for Groups), use the direct ID attributes.
 
 queues = {
   "example_queue" = {
@@ -10,11 +10,13 @@ queues = {
     acw_timeout_ms          = 300000
     skill_evaluation_method = "BEST"
 
-    # 🛑 ACTION REQUIRED: Replace these names with REAL resources from your Architect Flows and Prompts
+    # Automated Lookups (Working for Flows and Prompts!)
     queue_flow_name     = "First Call Flow"
     queue_flow_type     = "inboundcall"
     whisper_prompt_name = "abc"
-    group_names         = ["e50e3457-b328-44b6-9f26-b9871b7dca91"]
+
+    # Direct ID Fallback for Groups (since name discovery is restricted)
+    groups = ["e50e3457-b328-44b6-9f26-b9871b7dca91"]
 
     auto_answer_only         = true
     enable_transcription     = true
@@ -44,7 +46,8 @@ queues = {
         expansion_timeout_seconds = 30
         member_groups = [
           {
-            member_group_name = "e50e3457-b328-44b6-9f26-b9871b7dca91"
+            # Using direct ID field instead of name lookup
+            member_group_id   = "e50e3457-b328-44b6-9f26-b9871b7dca91"
             member_group_type = "GROUP"
           }
         ]
@@ -78,7 +81,8 @@ queues = {
           ]
           groups = [
             {
-              member_group_name = "e50e3457-b328-44b6-9f26-b9871b7dca91"
+              # Using direct ID field instead of name lookup
+              member_group_id   = "e50e3457-b328-44b6-9f26-b9871b7dca91"
               member_group_type = "GROUP"
             }
           ]
