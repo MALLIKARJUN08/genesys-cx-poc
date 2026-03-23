@@ -22,7 +22,7 @@ terraform {
     workspaces {
       # This tag logic allows us to use multiple workspaces (e.g., genesys-cx-poc, genesys-cx-prod)
       # without hardcoding a single workspace name.
-      tags = ["genesys-cx"] 
+      tags = ["genesys-cx"]
     }
   }
 }
