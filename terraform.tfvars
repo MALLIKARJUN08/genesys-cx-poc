@@ -15,8 +15,7 @@ queues = {
     queue_flow_type     = "inqueuecall"
     whisper_prompt_name = "abc"
 
-    # Direct ID Fallback for Groups (since name discovery is restricted)
-    groups = ["e50e3457-b328-44b6-9f26-b9871b7dca91"]
+
 
     auto_answer_only         = true
     enable_transcription     = true
