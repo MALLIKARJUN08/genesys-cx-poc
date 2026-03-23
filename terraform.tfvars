@@ -14,7 +14,7 @@ queues = {
     queue_flow_name     = "First Call Flow"
     queue_flow_type     = "inboundcall"
     whisper_prompt_name = "abc"
-    group_names         = ["CIC_group"]
+    group_names         = ["Zurich_QA_Test_Group"]
 
     auto_answer_only         = true
     enable_transcription     = true
@@ -44,7 +44,7 @@ queues = {
         expansion_timeout_seconds = 30
         member_groups = [
           {
-            member_group_name = "CIC_group"
+            member_group_name = "Zurich_QA_Test_Group"
             member_group_type = "GROUP"
           }
         ]
@@ -78,7 +78,7 @@ queues = {
           ]
           groups = [
             {
-              member_group_name = "CIC_group"
+              member_group_name = "Zurich_QA_Test_Group"
               member_group_type = "GROUP"
             }
           ]
