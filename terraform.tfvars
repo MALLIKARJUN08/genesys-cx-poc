@@ -11,7 +11,7 @@ queues = {
     skill_evaluation_method = "BEST"
 
     # 🛑 ACTION REQUIRED: Replace these names with REAL resources from your Architect Flows and Prompts
-    queue_flow_name     = "First Call Flow" 
+    queue_flow_name     = "First Call Flow"
     queue_flow_type     = "Inbound Call"
     whisper_prompt_name = "abc"
     group_names         = ["CIC_group"]
