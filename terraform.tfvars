@@ -1,75 +1,119 @@
-# Full Project Verification Run - 2026-03-17
+# Genesys CX as Code - Automated lookup Configuration
+# 🚀 This version uses NAME-BASED lookups for Flows/Prompts and IDs for Groups.
+# ⚠️ Note: If name discovery fails (e.g. for Groups), use the direct ID attributes.
+
 queues = {
-  "poc_queue" = {
-    name        = "Terraform_POC_Queue"
-    description = "POC queue created via Terraform"
-  },
-  "automated_queue" = {
-    name        = "Terraform_Automated_Queue"
-    description = "This queue was created automatically via git push!"
-  },
-  "support_queue" = {
-    name        = "Terraform_Support_Queue"
-    description = "A new support queue created via GitHub Actions"
-  },
-  "technical_queue" = {
-    name        = "Technical_Queue"
-    description = "A new technical queue created via GitHub Actions"
-  },
-  "innovation_queue" = {
-    name        = "Innovation_Queue"
-    description = "A new queue demonstrating dynamic variable-driven creation!"
-  },
-   "CICD_queue" = {
-    name        = "CICD_Queue"
-    description = "A new queue demonstrating dynamic variable-driven creation!"
+  "example_queue" = {
+    name                    = "Sample_Advanced_Queue"
+    description             = "A queue demonstrating automated Name-to-ID lookups"
+    acw_wrapup_prompt       = "MANDATORY_TIMEOUT"
+    acw_timeout_ms          = 300000
+    skill_evaluation_method = "BEST"
+
+    # Automated Lookups (Working for Flows and Prompts!)
+    queue_flow_name     = "Default In-Queue Flow"
+    queue_flow_type     = "inqueuecall"
+    whisper_prompt_name = "abc"
+
+
+
+    auto_answer_only         = true
+    enable_transcription     = true
+    enable_audio_monitoring  = true
+    enable_manual_assignment = true
+    calling_party_name       = "Antigravity Support"
+
+    media_settings_call = {
+      alerting_timeout_sec      = 30
+      service_level_percentage  = 0.8
+      service_level_duration_ms = 20000
+    }
+
+    routing_rules = [
+      {
+        operator     = "MEETS_THRESHOLD"
+        threshold    = 5
+        wait_seconds = 60
+      }
+    ]
+
+    bullseye_rings = [
+      {
+        expansion_timeout_seconds = 15
+      },
+      {
+        expansion_timeout_seconds = 30
+        member_groups = [
+          {
+            # Using direct ID field instead of name lookup
+            member_group_id   = "e50e3457-b328-44b6-9f26-b9871b7dca91"
+            member_group_type = "GROUP"
+          }
+        ]
+      }
+    ]
+
+    conditional_group_activation = {
+      pilot_rule = {
+        condition_expression = "C1"
+        conditions = [
+          {
+            simple_metric = {
+              metric = "EstimatedWaitTime"
+            }
+            operator = "GreaterThan"
+            value    = 45
+          }
+        ]
+      }
+      rules = [
+        {
+          condition_expression = "C1"
+          conditions = [
+            {
+              simple_metric = {
+                metric = "IdleAgentCount"
+              }
+              operator = "LessThan"
+              value    = 2
+            }
+          ]
+          groups = [
+            {
+              # Using direct ID field instead of name lookup
+              member_group_id   = "e50e3457-b328-44b6-9f26-b9871b7dca91"
+              member_group_type = "GROUP"
+            }
+          ]
+        }
+      ]
+    }
   }
 }
 
 users = {
-  "example_user" = {
-    name  = "Terraform POC User"
-    email = "terraform_poc_user@example.com"
+  "sample_admin" = {
+    name  = "Sample Admin"
+    email = "admin@example.com"
     state = "active"
-  },
-  "jane_doe" = {
-    name  = "Jane Doe"
-    email = "jane.doe@example.com"
+  }
+  "arjunv" = {
+    name  = "Arjun V"
+    email = "arjunv@example.com"
+    state = "active"
+  }
+  "viratK" = {
+    name  = "Virat Kohli"
+    email = "viratk@example.com"
     state = "active"
   }
 }
 
 roles = {
-  "support_tier_1" = {
-    name        = "Support Tier 1"
-    description = "Custom role for first level support agents with granular permissions"
-    permissions = []
-    permission_policies = [
-      {
-        domain      = "routing"
-        entity_name = "queue"
-        action_set  = ["view", "join"]
-      },
-      {
-        domain      = "directory"
-        entity_name = "user"
-        action_set  = ["view", "search"]
-      },
-      {
-        domain      = "conversation"
-        entity_name = "communication"
-        action_set  = ["view"]
-      },
-      {
-        domain      = "conversation"
-        entity_name = "call"
-        action_set  = ["view"]
-      },
-      {
-        domain      = "alerting"
-        entity_name = "interaction"
-        action_set  = ["view"]
-      }
-    ]
+  "sample_role" = {
+    name                = "Sample Role"
+    description         = "A basic sample role"
+    permissions         = ["routing:queue:view"]
+    permission_policies = []
   }
 }

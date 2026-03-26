@@ -7,6 +7,21 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target Environment'
+        required: true
+        default: 'poc'
+        type: choice
+        options:
+          - poc
+          - prod
+
+# Prevent multiple runs in the same workspace from overlapping
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.inputs.environment || 'poc' }}
+  cancel-in-progress: false
 
 jobs:
   terraform:
@@ -16,13 +31,14 @@ jobs:
     # This environment uses the TF_API_TOKEN secret configured in the repository
     env:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TF_WORKSPACE: ${{ github.event.inputs.environment == 'prod' && 'genesys-cx-prod' || 'genesys-cx-poc' }}
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
         with:
           # Terraform Cloud handles the execution, so we just set up CLI
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
@@ -37,10 +53,11 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
         run: terraform plan -no-color
         continue-on-error: true
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        # Run apply on pushes to main OR when manually triggered via workflow_dispatch
+        if: (github.ref == 'refs/heads/main' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
         run: terraform apply -auto-approve
