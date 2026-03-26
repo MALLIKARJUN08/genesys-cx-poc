@@ -23,7 +23,10 @@ queues = {
   "CICD_queue" = {
     name        = "CICD_Queue"
     description = "A new queue demonstrating dynamic variable-driven creation!"
-  }
+  },
+  "QA_Queue_CICD" = {
+  name        = "QA_Queue_CICD"
+    description = "A new queue demonstrating dynamic variable-driven creation!"
 
 }
 
