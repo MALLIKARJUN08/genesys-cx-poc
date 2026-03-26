@@ -10,10 +10,10 @@ queues = {
     acw_timeout_ms          = 300000
     skill_evaluation_method = "BEST"
 
-    # Automated Lookups (Working for Flows and Prompts!)
-    queue_flow_name     = "Default In-Queue Flow"
-    queue_flow_type     = "inqueuecall"
-    whisper_prompt_name = "abc"
+    # Automated Lookups - Removed to avoid flow validation error
+    # queue_flow_name     = "Default In-Queue Flow"
+    # queue_flow_type     = "inqueuecall"
+    # whisper_prompt_name = "abc"
 
 
 
