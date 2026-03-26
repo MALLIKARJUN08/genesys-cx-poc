@@ -107,6 +107,11 @@ users = {
     email = "viratk@example.com"
     state = "active"
   }
+  "CICD_User" = {
+    name  = "CICD_User"
+    email = "CICD_User@example.com"
+    state = "inactive"
+  }
 }
 
 roles = {
