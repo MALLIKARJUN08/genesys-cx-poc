@@ -1,15 +1,14 @@
-resource "genesyscloud_auth_role" "custom_roles" {
-  for_each    = var.roles
-  name        = each.value.name
-  description = each.value.description
-  permissions = each.value.permissions
+# ==========================================
+# Roles Module Main Resource File
+# Iterates through the `var.roles` map and creates custom Authorization Roles in Genesys Cloud.
+# ==========================================
 
-  dynamic "permission_policies" {
-    for_each = each.value.permission_policies
-    content {
-      domain      = permission_policies.value.domain
-      entity_name = permission_policies.value.entity_name
-      action_set  = permission_policies.value.action_set
-    }
-  }
+resource "genesyscloud_auth_role" "custom_roles" {
+  # The for_each loop iterates over the `roles` map from root variables
+  for_each    = var.roles
+  
+  name        = each.value.name        # The display name of the role
+  description = each.value.description # What this role should be used for
+  permissions = each.value.permissions # A list of exact API permission strings (e.g., "routing:queue:view")
 }
+
