@@ -116,4 +116,10 @@ roles = {
     permissions         = ["routing:queue:view"]
     permission_policies = []
   }
+  "TEST_ROLE_CICD" = {
+    name                = "Test Role"
+    description         = "A basic sample role"
+    permissions         = ["routing:queue:view"]
+    permission_policies = []
+  }
 }
