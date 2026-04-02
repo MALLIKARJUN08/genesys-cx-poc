@@ -6,7 +6,7 @@ queues = {
   "example_queue" = {
     name                    = "Sample_Advanced_Queue"
     description             = "A queue demonstrating automated Name-to-ID lookups"
-    division_name           = "my_custom_division" # <== Dynamically lookup the ID from the division above!
+    # division_name           = "my_custom_division" # <== Commented out: Requires 'All Divisions' Global Role Access
     acw_wrapup_prompt       = "MANDATORY_TIMEOUT"
     acw_timeout_ms          = 300000
     skill_evaluation_method = "BEST"
