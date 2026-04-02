@@ -7,9 +7,14 @@
 variable "users" {
   description = "A map of users to create"
   type = map(object({
-    name  = string
-    email = string
-    state = string
+    name           = string
+    email          = string
+    state          = string
+    routing_skills = optional(list(object({
+      skill_id    = optional(string)
+      skill_name  = optional(string)
+      proficiency = number
+    })))
   }))
   default = {}
 
