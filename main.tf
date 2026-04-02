@@ -12,10 +12,10 @@ module "divisions" {
 }
 
 module "queues" {
-  source            = "./modules/queues" # Path to the module source code
-  queues            = var.queues         # Passing the root variable 'queues' into the module
+  source            = "./modules/queues"                # Path to the module source code
+  queues            = var.queues                        # Passing the root variable 'queues' into the module
   created_divisions = module.divisions.division_details # Explicit Dependency mapping!
-  created_users     = module.users.user_details # Explicit Dependency mapping!
+  created_users     = module.users.user_details         # Explicit Dependency mapping!
 }
 
 # 3. Skills Module
@@ -28,8 +28,8 @@ module "skills" {
 # 4. Users Module
 # This module is responsible for analyzing the `var.users` map and creating Genesys Cloud Users.
 module "users" {
-  source         = "./modules/users" # Path to the module source code
-  users          = var.users         # Passing the root variable 'users' into the module
+  source         = "./modules/users"           # Path to the module source code
+  users          = var.users                   # Passing the root variable 'users' into the module
   created_skills = module.skills.skill_details # Explicit Dependency mapping!
 }
 

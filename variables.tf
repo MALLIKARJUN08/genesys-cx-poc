@@ -124,7 +124,7 @@ variable "queues" {
     }))
 
     # Direct Member Assignment (Agents added directly to queue)
-    members                      = optional(list(object({
+    members = optional(list(object({
       user_id   = optional(string) # (Optional) Direct ID of the user
       user_name = optional(string) # (Optional) Dynamic name lookup mapping
       ring_num  = number           # Which bullseye ring they belong to (1 for standard routing)
@@ -138,9 +138,9 @@ variable "queues" {
 variable "users" {
   description = "Users to be passed to the users module"
   type = map(object({
-    name           = string # Display name
-    email          = string # Primary email address (must be unique)
-    state          = string # "active", "inactive", or "deleted"
+    name  = string # Display name
+    email = string # Primary email address (must be unique)
+    state = string # "active", "inactive", or "deleted"
     routing_skills = optional(list(object({
       skill_id    = optional(string) # Explicit skill ID
       skill_name  = optional(string) # Dynamic lookup name

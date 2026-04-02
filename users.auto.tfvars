@@ -6,7 +6,7 @@ users = {
     name  = "Sample Admin"
     email = "admin@example.com"
     state = "active"
-    
+
     # Assign the user to the newly created routing skill dynamically
     routing_skills = [
       {
