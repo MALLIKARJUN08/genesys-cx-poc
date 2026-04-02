@@ -12,9 +12,10 @@ resource "genesyscloud_routing_queue" "queues" {
   name                     = each.value.name
   description              = each.value.description
   
-  # Automatically assigns to the 'home' division if no division_id is specified
-  division_id              = each.value.division_id != null ? each.value.division_id : data.genesyscloud_auth_division_home.home.id
-  
+  # Automatically maps to a direct ID, dynamic named division, or the 'home' division.
+  division_id              = each.value.division_id != null ? each.value.division_id : (
+    each.value.division_name != null ? var.created_divisions[each.value.division_name].id : data.genesyscloud_auth_division_home.home.id
+  )
   acw_wrapup_prompt        = each.value.acw_wrapup_prompt
   acw_timeout_ms           = each.value.acw_timeout_ms
   skill_evaluation_method  = each.value.skill_evaluation_method
@@ -152,7 +153,7 @@ resource "genesyscloud_routing_queue" "queues" {
   dynamic "members" {
     for_each = each.value.members != null ? each.value.members : []
     content {
-      user_id  = members.value.user_id
+      user_id  = members.value.user_id != null ? members.value.user_id : var.created_users[members.value.user_name].id
       ring_num = members.value.ring_num
     }
   }

@@ -10,6 +10,7 @@ variable "queues" {
     name                     = string             # (Required) Genesys Cloud display name
     description              = optional(string)   # (Optional) Description of the queue
     division_id              = optional(string)   # (Optional) Org division for access control
+    division_name            = optional(string)   # (Optional) Dynamic name lookup mapping
     acw_wrapup_prompt        = optional(string)   # (Optional) After Call Work (ACW) prompt type
     acw_timeout_ms           = optional(number)   # (Optional) ACW duration in milliseconds
     skill_evaluation_method  = optional(string)   # (Optional) Routing skill evaluation (e.g., BEST)
@@ -98,9 +99,33 @@ variable "queues" {
 
     # Direct Agent assignment
     members = optional(list(object({
-      user_id  = string
-      ring_num = number
+      user_id   = optional(string)
+      user_name = optional(string)
+      ring_num  = number
     })))
   }))
 }
+
+# ==========================================
+# Dynamic Cross-Module Dependency mapping
+# ==========================================
+variable "created_divisions" {
+  description = "Map of division names to their generated IDs from the divisions module"
+  type        = map(object({
+    id   = string
+    name = string
+  }))
+  default     = {}
+}
+
+variable "created_users" {
+  description = "Map of user names to their generated IDs from the users module"
+  type        = map(object({
+    id    = string
+    name  = string
+    email = string
+  }))
+  default     = {}
+}
+
 

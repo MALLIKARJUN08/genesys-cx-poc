@@ -4,7 +4,28 @@
 # These variables will be populated by `terraform.tfvars`.
 # ==========================================
 
-# 1. Queues Variable
+# 1. Divisions Variable
+# Defines the expected structure for creating Genesys Cloud divisions
+variable "divisions" {
+  description = "Divisions to be passed to the divisions module"
+  type = map(object({
+    name        = string                # Division display name
+    description = optional(string)      # Purpose of the division
+    home        = optional(bool, false) # Whether this is the home division
+  }))
+  default = {}
+}
+
+# 2. Skills Variable
+variable "skills" {
+  description = "Skills to be passed to the skills module"
+  type = map(object({
+    name = string # Skill display name
+  }))
+  default = {}
+}
+
+# 3. Queues Variable
 # This is a map of objects. Each "key" in the map represents a unique queue to create.
 variable "queues" {
   description = "A complex object containing all configuration options for Genesys Cloud Queues"
@@ -12,6 +33,7 @@ variable "queues" {
     name                    = string           # (Required) The display name of the queue in Genesys Cloud
     description             = optional(string) # (Optional) Description of the queue
     division_id             = optional(string) # (Optional) The division to place the queue in
+    division_name           = optional(string) # (Optional) Dynamic name lookup mapping
     acw_wrapup_prompt       = optional(string) # (Optional) After Call Work (ACW) prompt type (e.g., MANDATORY_TIMEOUT)
     acw_timeout_ms          = optional(number) # (Optional) How long ACW lasts in milliseconds
     skill_evaluation_method = optional(string) # (Optional) How routing evaluates agent skills (e.g., BEST, ALL)
@@ -102,26 +124,32 @@ variable "queues" {
     }))
 
     # Direct Member Assignment (Agents added directly to queue)
-    members = optional(list(object({
-      user_id  = string # ID of the user
-      ring_num = number # Which bullseye ring they belong to (1 for standard routing)
+    members                      = optional(list(object({
+      user_id   = optional(string) # (Optional) Direct ID of the user
+      user_name = optional(string) # (Optional) Dynamic name lookup mapping
+      ring_num  = number           # Which bullseye ring they belong to (1 for standard routing)
     })))
   }))
 }
 
 
-# 2. Users Variable
+# 4. Users Variable
 # Defines the expected structure for creating Genesys Cloud users
 variable "users" {
   description = "Users to be passed to the users module"
   type = map(object({
-    name  = string # Display name
-    email = string # Primary email address (must be unique)
-    state = string # "active", "inactive", or "deleted"
+    name           = string # Display name
+    email          = string # Primary email address (must be unique)
+    state          = string # "active", "inactive", or "deleted"
+    routing_skills = optional(list(object({
+      skill_id    = optional(string) # Explicit skill ID
+      skill_name  = optional(string) # Dynamic lookup name
+      proficiency = number
+    })))
   }))
 }
 
-# 3. Roles Variable
+# 5. Roles Variable
 # Defines the expected structure for creating Authorization Roles
 variable "roles" {
   description = "Roles to be passed to the roles module"

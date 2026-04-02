@@ -10,5 +10,13 @@ resource "genesyscloud_user" "users" {
   name  = each.value.name  # The full name of the user
   email = each.value.email # The primary email (used for login)
   state = each.value.state # Is the user active or inactive?
+
+  dynamic "routing_skills" {
+    for_each = each.value.routing_skills != null ? each.value.routing_skills : []
+    content {
+      skill_id    = routing_skills.value.skill_id != null ? routing_skills.value.skill_id : var.created_skills[routing_skills.value.skill_name].id
+      proficiency = routing_skills.value.proficiency
+    }
+  }
 }
 

@@ -5,6 +5,16 @@
 # bubble them up to the root level so they print to the console when `terraform apply` finishes.
 # ==========================================
 
+output "divisions" {
+  description = "Consolidated details (IDs and Names) of all created Divisions"
+  value       = module.divisions.division_details # Pulls the `division_details` output from the `divisions` module
+}
+
+output "skills" {
+  description = "Consolidated details (IDs and Names) of all created Routing Skills"
+  value       = module.skills.skill_details
+}
+
 output "queues" {
   description = "Consolidated details (IDs and Names) of all created Routing Queues"
   value       = module.queues.queue_details # Pulls the `queue_details` output from the `queues` module

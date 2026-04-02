@@ -28,3 +28,15 @@ variable "users" {
   }
 }
 
+# ==========================================
+# Dynamic Cross-Module Dependency mapping
+# ==========================================
+variable "created_skills" {
+  description = "Map of skill names to their generated IDs from the skills module"
+  type        = map(object({
+    id   = string
+    name = string
+  }))
+  default     = {}
+}
+

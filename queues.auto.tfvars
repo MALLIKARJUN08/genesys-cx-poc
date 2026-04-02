@@ -6,6 +6,7 @@ queues = {
   "example_queue" = {
     name                    = "Sample_Advanced_Queue"
     description             = "A queue demonstrating automated Name-to-ID lookups"
+    division_name           = "my_custom_division" # <== Dynamically lookup the ID from the division above!
     acw_wrapup_prompt       = "MANDATORY_TIMEOUT"
     acw_timeout_ms          = 300000
     skill_evaluation_method = "BEST"
@@ -14,8 +15,6 @@ queues = {
     queue_flow_name     = "Default In-Queue Flow"
     queue_flow_type     = "inqueuecall"
     whisper_prompt_name = "abc"
-
-
 
     auto_answer_only         = true
     enable_transcription     = true
@@ -88,22 +87,13 @@ queues = {
         }
       ]
     }
-  }
-}
 
-users = {
-  "sample_admin" = {
-    name  = "Sample Admin"
-    email = "admin@example.com"
-    state = "active"
-  }
-}
-
-roles = {
-  "sample_role" = {
-    name                = "Sample Role"
-    description         = "A basic sample role"
-    permissions         = ["routing:queue:view"]
-    permission_policies = []
+    # Dynamically look up the user ID by mapping their terraform logical key!
+    members = [
+      {
+        user_name = "sample_admin"
+        ring_num  = 1
+      }
+    ]
   }
 }
