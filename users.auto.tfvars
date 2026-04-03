@@ -25,6 +25,10 @@ users = {
       {
         skill_name  = "my_custom_skill"
         proficiency = 4.5
+      },
+      {
+        skill_name  = "CICD_Skill"
+        proficiency = 3
       }
     ]
   }
