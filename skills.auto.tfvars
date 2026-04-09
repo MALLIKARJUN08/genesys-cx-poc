@@ -8,4 +8,7 @@ skills = {
   "CICD_Skill" = {
     name = "CICD_Skill"
   }
+  "Demo_Test_skill" = {
+    name = "Demo_Test_skill"
+  }
 }
