@@ -10,7 +10,7 @@ users = {
     # Assign the user to the newly created routing skill dynamically
     routing_skills = [
       {
-        skill_name  = "my_custom_skill"
+        skill_name  = "Changed_Skill"
         proficiency = 4.5
       }
     ]
@@ -23,7 +23,7 @@ users = {
     # Assign the user to the newly created routing skill dynamically
     routing_skills = [
       {
-        skill_name  = "my_custom_skill"
+        skill_name  = "Changed_Skill"
         proficiency = 4.5
       },
       {
