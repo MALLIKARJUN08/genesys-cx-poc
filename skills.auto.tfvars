@@ -3,7 +3,7 @@
 # ==========================================
 skills = {
   "my_custom_skill" = {
-    name = "Sample_Dynamic_Skill"
+    name = "Changed_Skill"
   }
   "CICD_Skill" = {
     name = "CICD_Skill"
