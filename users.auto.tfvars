@@ -13,6 +13,10 @@ users = {
         skill_name  = "my_custom_skill"
         proficiency = 4.5
       }
+      {
+        skill_name  = "Demo_Test_skill"
+        proficiency = 4
+      }
     ]
   }
   "sample_agent" = {
