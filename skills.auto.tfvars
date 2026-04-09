@@ -2,7 +2,7 @@
 # TEST SKILLS CREATION
 # ==========================================
 skills = {
-  "my_custom_skill" = {
+  "Changed_Skill" = {
     name = "Changed_Skill"
   }
   "CICD_Skill" = {
