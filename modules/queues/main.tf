@@ -9,39 +9,39 @@ resource "genesyscloud_routing_queue" "queues" {
   for_each = var.queues
 
   # Basic configuration mapped directly from variables
-  name                     = each.value.name
-  description              = each.value.description
-  
+  name        = each.value.name
+  description = each.value.description
+
   # Automatically maps to a direct ID, dynamic named division, or the 'home' division.
-  division_id              = each.value.division_id != null ? each.value.division_id : (
+  division_id = each.value.division_id != null ? each.value.division_id : (
     each.value.division_name != null ? var.created_divisions[each.value.division_name].id : data.genesyscloud_auth_division_home.home.id
   )
-  acw_wrapup_prompt        = each.value.acw_wrapup_prompt
-  acw_timeout_ms           = each.value.acw_timeout_ms
-  skill_evaluation_method  = each.value.skill_evaluation_method
-  
+  acw_wrapup_prompt       = each.value.acw_wrapup_prompt
+  acw_timeout_ms          = each.value.acw_timeout_ms
+  skill_evaluation_method = each.value.skill_evaluation_method
+
   # Automated Validation for Flows:
   # Uses the provided explicit ID first. If null, tries to use the Name-based data lookup ID.
-  queue_flow_id            = each.value.queue_flow_id != null ? each.value.queue_flow_id : (each.value.queue_flow_name != null ? data.genesyscloud_flow.flows[each.value.queue_flow_name].id : null)
-  
+  queue_flow_id = each.value.queue_flow_id != null ? each.value.queue_flow_id : (each.value.queue_flow_name != null ? data.genesyscloud_flow.flows[each.value.queue_flow_name].id : null)
+
   # Automated Validation for Whisper Prompts:
   # Uses explicit ID first, falls back to Name-based data lookup ID.
-  whisper_prompt_id        = each.value.whisper_prompt_id != null ? each.value.whisper_prompt_id : (each.value.whisper_prompt_name != null ? data.genesyscloud_architect_user_prompt.prompts[each.value.whisper_prompt_name].id : null)
-  
+  whisper_prompt_id = each.value.whisper_prompt_id != null ? each.value.whisper_prompt_id : (each.value.whisper_prompt_name != null ? data.genesyscloud_architect_user_prompt.prompts[each.value.whisper_prompt_name].id : null)
+
   auto_answer_only         = each.value.auto_answer_only
   enable_transcription     = each.value.enable_transcription
   enable_audio_monitoring  = each.value.enable_audio_monitoring
   enable_manual_assignment = each.value.enable_manual_assignment
   calling_party_name       = each.value.calling_party_name
-  
+
   # Group Assignment: Combines explicit IDs and Name-based lookup IDs, then removes duplicates/nulls
   groups = distinct(compact(concat(
     each.value.groups != null ? each.value.groups : [],
     each.value.group_names != null ? [for g in each.value.group_names : data.genesyscloud_group.groups[g].id] : []
   )))
-  
-  wrapup_codes             = each.value.wrapup_codes
-  default_script_ids       = each.value.default_script_ids
+
+  wrapup_codes       = each.value.wrapup_codes
+  default_script_ids = each.value.default_script_ids
 
   # Dynamic Block: Only created if outbound_email_address is provided in the tfvars
   dynamic "outbound_email_address" {
@@ -185,8 +185,8 @@ data "genesyscloud_architect_user_prompt" "prompts" {
 data "genesyscloud_group" "groups" {
   for_each = toset(distinct(compact(concat(
     flatten([for q in var.queues : q.group_names if q.group_names != null]),
-    flatten([for q in var.queues : [for b in (q.bullseye_rings != null ? q.bullseye_rings : []) : [for m in (b.member_groups != null ? b.member_groups : []) : m.member_group_name if m.member_group_name != null]] if q.bullseye_rings != null]),
-    flatten([for q in var.queues : [for r in (q.conditional_group_activation != null && q.conditional_group_activation.rules != null ? q.conditional_group_activation.rules : []) : [for g in (r.groups != null ? r.groups : []) : g.member_group_name if g.member_group_name != null]] if q.conditional_group_activation != null])
+    flatten([for q in var.queues : [for b in(q.bullseye_rings != null ? q.bullseye_rings : []) : [for m in(b.member_groups != null ? b.member_groups : []) : m.member_group_name if m.member_group_name != null]] if q.bullseye_rings != null]),
+    flatten([for q in var.queues : [for r in(q.conditional_group_activation != null && q.conditional_group_activation.rules != null ? q.conditional_group_activation.rules : []) : [for g in(r.groups != null ? r.groups : []) : g.member_group_name if g.member_group_name != null]] if q.conditional_group_activation != null])
   ))))
   name = each.value
 }

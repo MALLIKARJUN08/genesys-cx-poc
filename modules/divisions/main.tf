@@ -4,8 +4,8 @@
 # ==========================================
 
 resource "genesyscloud_auth_division" "divisions" {
-  for_each    = var.divisions
-  
+  for_each = var.divisions
+
   name        = each.value.name
   description = each.value.description
   home        = each.value.home

@@ -6,11 +6,11 @@
 variable "flows" {
   description = "Map of Architect Flows to deploy (YAML format from Architect export)"
   type = map(object({
-    name        = string           # Flow display name in Genesys Cloud
-    description = optional(string) # Flow description
-    type        = string           # Type of flow: "inboundcall", "inboundemail", "inboundshortmessage", "outboundcall", "inqueuecall", etc.
-    filepath    = string           # Path to YAML file exported from Architect (e.g., "./flows/my_flow.yaml")
-    locked      = optional(bool, false)  # Lock flow from editing in UI (true for production, false for testing)
+    name        = string                # Flow display name in Genesys Cloud
+    description = optional(string)      # Flow description
+    type        = string                # Type of flow: "inboundcall", "inboundemail", "inboundshortmessage", "outboundcall", "inqueuecall", etc.
+    filepath    = string                # Path to YAML file exported from Architect (e.g., "./flows/my_flow.yaml")
+    locked      = optional(bool, false) # Lock flow from editing in UI (true for production, false for testing)
   }))
   default = {}
 }

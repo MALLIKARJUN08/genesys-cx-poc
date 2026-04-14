@@ -96,6 +96,6 @@ flows = {
     description = "Practice flow deployed using CICD"
     type        = "inboundcall"
     filepath    = "./flows/Practice_Flow.yaml"
-    locked      = true  # Lock flow from editing in UI for production safety
+    locked      = true # Lock flow from editing in UI for production safety
   }
 }

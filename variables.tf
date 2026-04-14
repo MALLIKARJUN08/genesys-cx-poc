@@ -157,8 +157,8 @@ variable "flows" {
   type = map(object({
     name        = string
     description = optional(string)
-    type        = string  # "inboundcall", "inboundemail", etc.
-    filepath    = string  # Path to YAML file (e.g., "./flows/sample_flow.yaml")
+    type        = string # "inboundcall", "inboundemail", etc.
+    filepath    = string # Path to YAML file (e.g., "./flows/sample_flow.yaml")
     locked      = optional(bool, false)
   }))
   default = {}

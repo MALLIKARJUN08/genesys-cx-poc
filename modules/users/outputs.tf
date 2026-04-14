@@ -5,7 +5,7 @@
 
 output "user_details" {
   description = "A map of user names, emails, and their generated Genesys Cloud IDs"
-  
+
   # Loops through all created users and constructs an object mapping their key to their details
   value = {
     for k, v in genesyscloud_user.users : k => {
