@@ -17,23 +17,22 @@ terraform {
   }
 
   # Terraform Cloud Backend Configuration
-  # TEMPORARILY DISABLED FOR LOCAL STATE POC TESTING
-  # Re-enable after POC validation for CI/CD
-  # cloud {
-  #   organization = "cg_genesys" # The HCP Terraform Organization name
-  #   workspaces {
-  #     # This tag logic allows us to use multiple workspaces (e.g., genesys-cx-poc, genesys-cx-prod)
-  #     # without hardcoding a single workspace name.
-  #     tags = ["genesys-cx"]
-  #   }
-  # }
+  cloud {
+    organization = "cg_genesys" # The HCP Terraform Organization name
+    workspaces {
+      # This tag logic allows us to use multiple workspaces (e.g., genesys-cx-poc, genesys-cx-prod)
+      # without hardcoding a single workspace name.
+      tags = ["genesys-cx"]
+    }
+  }
 }
 
 # Provider Initialization
-
 provider "genesyscloud" {
-  oauthclient_id     = "0f667a85-4755-4fcc-88d1-e86ce835303f"
-  oauthclient_secret = "5lvUUn4aEpGhv6sWguw6V5emnuKcHLi5A3V2sVlLvZY"
-  aws_region         = "us-west-2"
+  # ⚠️ SECURITY BEST PRACTICE ⚠️
+  # We do NOT hardcode Genesys Cloud OAuth credentials here.
+  # Instead, Terraform Cloud injects them securely via these Environment Variables:
+  # - GENESYSCLOUD_OAUTHCLIENT_ID
+  # - GENESYSCLOUD_OAUTHCLIENT_SECRET
+  # - GENESYSCLOUD_REGION
 }
-
