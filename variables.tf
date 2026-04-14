@@ -147,15 +147,70 @@ variable "users" {
       proficiency = number
     })))
   }))
+  default = {}
 }
 
-# 5. Roles Variable
-# Defines the expected structure for creating Authorization Roles
+# 5. Flows Variable
+# Defines architect flows to deploy to Genesys Cloud
+variable "flows" {
+  description = "Architect Flows (YAML format) to be passed to the flows module"
+  type = map(object({
+    name        = string
+    description = optional(string)
+    type        = string  # "inboundcall", "inboundemail", etc.
+    filepath    = string  # Path to YAML file (e.g., "./flows/sample_flow.yaml")
+    locked      = optional(bool, false)
+  }))
+  default = {}
+}
+
+# 6. Roles Variable
 variable "roles" {
   description = "Roles to be passed to the roles module"
   type = map(object({
-    name        = string       # Role display name
-    description = string       # Purpose of the role
-    permissions = list(string) # List of permission strings (e.g., "routing:queue:view")
+    name        = string
+    description = optional(string)
   }))
+  default = {}
+}
+
+# ==========================================
+# Feature Flags for Selective Deployment
+# Use these to control which resources get created
+# ==========================================
+
+variable "create_divisions" {
+  description = "Whether to create divisions"
+  type        = bool
+  default     = true
+}
+
+variable "create_skills" {
+  description = "Whether to create skills"
+  type        = bool
+  default     = true
+}
+
+variable "create_users" {
+  description = "Whether to create users"
+  type        = bool
+  default     = true
+}
+
+variable "create_queues" {
+  description = "Whether to create queues"
+  type        = bool
+  default     = true
+}
+
+variable "create_roles" {
+  description = "Whether to create roles"
+  type        = bool
+  default     = true
+}
+
+variable "create_flows" {
+  description = "Whether to create flows"
+  type        = bool
+  default     = true
 }

@@ -1,0 +1,43 @@
+# ==========================================
+# Placeholder: Architect Flow YAML
+# INSTRUCTIONS:
+# 1. Open Genesys Architect
+# 2. Open the flow you want to deploy
+# 3. Click "Publish" → "Export"
+# 4. Select "YAML" format
+# 5. Copy the exported YAML content
+# 6. Replace this entire file with the exported YAML
+# ==========================================
+
+# Example placeholder structure (replace with your actual flow)
+name: Sample Inbound Call Flow
+description: Replace this with your actual exported flow from Architect
+type: inboundcall
+version: 1
+
+variables:
+  - name: queue_name
+    type: string
+    value: support_queue
+
+states:
+  - name: Initial State
+    description: Entry point of the flow
+    actions:
+      - type: log
+        message: "Call received"
+
+  - name: Queue Transfer
+    description: Transfer call to queue
+    actions:
+      - type: transfer
+        target: queue
+
+# ==========================================
+# TO ADD YOUR FLOW:
+# 1. Export your flow from Architect (Publish → Export → YAML)
+# 2. Replace everything above with the exported YAML content
+# 3. Save this file
+# 4. Update the corresponding .tfvars file with the flow name and filepath
+# 5. Run: terraform apply -var-file="environments/poc.tfvars"
+# ==========================================

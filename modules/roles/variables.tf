@@ -6,9 +6,9 @@
 variable "roles" {
   description = "A map of custom roles to create"
   type = map(object({
-    name        = string       # Internal name
-    description = string       # Description of what the role can do
-    permissions = list(string) # The array of permission scopes to grant
+    name        = string                     # Internal name
+    description = optional(string)           # Description of what the role can do
+    permissions = optional(list(string), []) # The array of permission scopes to grant
   }))
   default = {} # Default to empty if nothing is passed
 }

@@ -7,26 +7,26 @@
 
 output "divisions" {
   description = "Consolidated details (IDs and Names) of all created Divisions"
-  value       = module.divisions.division_details # Pulls the `division_details` output from the `divisions` module
+  value       = try(module.divisions[0].division_details, {})
 }
 
 output "skills" {
   description = "Consolidated details (IDs and Names) of all created Routing Skills"
-  value       = module.skills.skill_details
+  value       = try(module.skills[0].skill_details, {})
 }
 
 output "queues" {
   description = "Consolidated details (IDs and Names) of all created Routing Queues"
-  value       = module.queues.queue_details # Pulls the `queue_details` output from the `queues` module
+  value       = try(module.queues[0].queue_details, {})
 }
 
 output "users" {
   description = "Consolidated details (IDs and Names) of all created Users"
-  value       = module.users.user_details # Pulls the `user_details` output from the `users` module
+  value       = try(module.users[0].user_details, {})
 }
 
 output "roles" {
   description = "Consolidated details (IDs and Names) of all created Authorization Roles"
-  value       = module.roles.role_details # Pulls the `role_details` output from the `roles` module
+  value       = try(module.roles[0].role_details, {})
 }
 

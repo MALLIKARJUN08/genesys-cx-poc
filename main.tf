@@ -1,43 +1,61 @@
 # ==========================================
-# Root Module Calls
+# Root Module Calls - With Feature Flags
 # These blocks instantiate the child modules located in the ./modules directory.
-# We pass the root variables directly into the child modules.
+# Feature flags control which resources are created per deployment scenario.
 # ==========================================
 
 # 1. Divisions Module
 # This module dynamically creates Divisions in Genesys Cloud.
 module "divisions" {
+  count     = var.create_divisions ? 1 : 0
   source    = "./modules/divisions"
   divisions = var.divisions
 }
 
-module "queues" {
-  source            = "./modules/queues"                # Path to the module source code
-  queues            = var.queues                        # Passing the root variable 'queues' into the module
-  created_divisions = module.divisions.division_details # Explicit Dependency mapping!
-  created_users     = module.users.user_details         # Explicit Dependency mapping!
-}
-
-# 3. Skills Module
+# 2. Skills Module
 # This module dynamically creates Routing Skills in Genesys Cloud.
 module "skills" {
+  count  = var.create_skills ? 1 : 0
   source = "./modules/skills"
   skills = var.skills
 }
 
+# 3. Queues Module
+# Creates queues with routing rules and dependencies on divisions and users.
+module "queues" {
+  count             = var.create_queues ? 1 : 0
+  source            = "./modules/queues"
+  queues            = var.queues
+  created_divisions = var.create_divisions ? module.divisions[0].division_details : {}
+  created_users     = var.create_users ? module.users[0].user_details : {}
+}
+
 # 4. Users Module
-# This module is responsible for analyzing the `var.users` map and creating Genesys Cloud Users.
+# Creates user accounts with routing skills assigned.
 module "users" {
-  source         = "./modules/users"           # Path to the module source code
-  users          = var.users                   # Passing the root variable 'users' into the module
-  created_skills = module.skills.skill_details # Explicit Dependency mapping!
+  count          = var.create_users ? 1 : 0
+  source         = "./modules/users"
+  users          = var.users
+  created_skills = var.create_skills ? module.skills[0].skill_details : {}
 }
 
 # 5. Roles Module
-# This module is responsible for analyzing the `var.roles` map and creating Genesys Cloud Authorization Roles.
+# Creates authorization roles for Genesys Cloud.
 module "roles" {
-  source = "./modules/roles" # Path to the module source code
-  roles  = var.roles         # Passing the root variable 'roles' into the module
+  count  = var.create_roles ? 1 : 0
+  source = "./modules/roles"
+  roles  = var.roles
+}
+
+# 6. Flows Module
+# Creates Architect flows deployed to Genesys Cloud.
+# Can be deployed independently of other resources.
+module "flows" {
+  count          = var.create_flows ? 1 : 0
+  source         = "./modules/flows"
+  flows          = var.flows
+  created_queues = var.create_queues ? module.queues[0].queue_details : {}
+  created_skills = var.create_skills ? module.skills[0].skill_details : {}
 }
 
 # ==========================================
