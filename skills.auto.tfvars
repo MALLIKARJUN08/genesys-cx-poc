@@ -9,7 +9,7 @@ skills = {
     name = "CICD_Skill"
   }
 
-"Support1" = {
+  "Support1" = {
     name = "Support1"
   }
 }
